@@ -1,6 +1,7 @@
 package org.example.fourdollar.product.domain;
 
 import lombok.Getter;
+import org.example.fourdollar.category.domain.Category;
 import org.example.fourdollar.common.model.Money;
 
 import java.time.ZonedDateTime;
@@ -30,6 +31,7 @@ public class Product {
     private List<ProductOptionGroup> optionGroup;
 
     private List<Category> categories;
+
     private List<Tag> tags;
 
     private ZonedDateTime createdAt;

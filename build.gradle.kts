@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+    implementation("org.jetbrains:annotations:26.0.2")
+
     implementation("org.springframework.boot:spring-boot-starter")
 
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -28,6 +30,7 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    testImplementation("com.h2database:h2")
 }
 
 tasks.withType<Test> {

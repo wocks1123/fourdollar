@@ -31,10 +31,10 @@ CREATE TABLE category
 (
     id            BIGINT PRIMARY KEY DEFAULT nextval('category_id_seq'),
     parent_id     BIGINT,
-    level         INTEGER      NOT NULL CHECK (level IN (1, 2, 3)),
-    display_order INTEGER            DEFAULT 0,
     name          VARCHAR(100) NOT NULL,
-    description   TEXT
+    description   TEXT,
+    level         INTEGER      NOT NULL CHECK (level IN (1, 2, 3)),
+    display_order INTEGER            DEFAULT 0
 );
 
 
@@ -47,7 +47,6 @@ CREATE TABLE product_category
     id          BIGINT PRIMARY KEY DEFAULT nextval('product_category_id_seq'),
     product_id  BIGINT NOT NULL,
     category_id BIGINT NOT NULL,
-    is_primary  BOOLEAN            DEFAULT FALSE,
     UNIQUE (product_id, category_id)
 );
 
