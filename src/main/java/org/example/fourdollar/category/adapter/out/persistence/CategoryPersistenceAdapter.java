@@ -3,6 +3,7 @@ package org.example.fourdollar.category.adapter.out.persistence;
 import lombok.RequiredArgsConstructor;
 import org.example.fourdollar.category.adapter.out.persistence.jpa.entity.CategoryJpaEntity;
 import org.example.fourdollar.category.adapter.out.persistence.jpa.repository.CategoryJpaRepository;
+import org.example.fourdollar.category.application.port.out.LoadCategoryListPort;
 import org.example.fourdollar.category.application.port.out.LoadCategoryPort;
 import org.example.fourdollar.category.application.port.out.SaveCategoryPort;
 import org.example.fourdollar.category.domain.Category;
@@ -10,11 +11,13 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository
 @RequiredArgsConstructor
-public class CategoryPersistenceAdapter implements LoadCategoryPort, SaveCategoryPort {
+public class CategoryPersistenceAdapter implements LoadCategoryPort, SaveCategoryPort, LoadCategoryListPort {
 
     private final CategoryJpaRepository categoryJpaRepository;
 
@@ -58,4 +61,10 @@ public class CategoryPersistenceAdapter implements LoadCategoryPort, SaveCategor
         );
     }
 
+    @Override
+    public List<Category> findAllRootCategories() {
+        return categoryJpaRepository.findAllRootCategories().stream()
+                .map(this::mapToDomain)
+                .toList();
+    }
 }

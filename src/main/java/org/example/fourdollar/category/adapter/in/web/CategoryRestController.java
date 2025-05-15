@@ -4,13 +4,18 @@ import lombok.RequiredArgsConstructor;
 import org.example.fourdollar.category.adapter.in.web.dto.ModifyCategoryRequest;
 import org.example.fourdollar.category.adapter.in.web.dto.RegisterCategoryRequest;
 import org.example.fourdollar.category.adapter.in.web.dto.RegisterCategoryResponse;
+import org.example.fourdollar.category.application.port.in.GetCategoryListUseCase;
 import org.example.fourdollar.category.application.port.in.GetCategoryUseCase;
 import org.example.fourdollar.category.application.port.in.ModifyCategoryUseCase;
 import org.example.fourdollar.category.application.port.in.RegisterCategoryUseCase;
 import org.example.fourdollar.category.application.port.in.dto.CategoryDetail;
+import org.example.fourdollar.category.application.port.in.dto.CategoryListResponse;
 import org.example.fourdollar.category.application.port.in.dto.ModifyCategoryCommand;
 import org.example.fourdollar.category.application.port.in.dto.RegisterCategoryCommand;
+import org.example.fourdollar.category.application.service.CategoryNotFoundException;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/categories")
@@ -20,6 +25,7 @@ class CategoryRestController {
     private final RegisterCategoryUseCase registerCategoryUseCase;
     private final ModifyCategoryUseCase modifyCategoryUseCase;
     private final GetCategoryUseCase getCategoryUseCase;
+    private final GetCategoryListUseCase getCategoryListUseCase;
 
     @PostMapping
     RegisterCategoryResponse registerCategory(@RequestBody RegisterCategoryRequest request) {
@@ -51,5 +57,9 @@ class CategoryRestController {
         return getCategoryUseCase.getCategory(categoryId);
     }
 
+    @GetMapping
+    List<CategoryListResponse> getCategoryList() {
+        return getCategoryListUseCase.getCategoryList();
+    }
 
 }

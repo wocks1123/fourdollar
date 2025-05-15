@@ -3,12 +3,28 @@ POST {{BASE_URL}}/api/v1/categories
 Content-Type: application/json
 
 {
-  "parentId": 302,
-  "name": "subsub category8",
-  "description": "서브서브 카테고리8",
+  "name": "Category1",
+  "description": "카테고리1",
+  "displayOrder": 1
+}
+
+
+###
+POST {{BASE_URL}}/api/v1/categories
+Content-Type: application/json
+
+{
+  "parentId": 1,
+  "name": "sub category1-1",
+  "description": "서브 카테고리1-1",
   "displayOrder": 1
 }
 
 
 ###
 GET {{BASE_URL}}/api/v1/categories/1
+
+
+###
+GET {{BASE_URL}}/api/v1/categories
+
