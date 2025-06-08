@@ -5,34 +5,40 @@ plugins {
     id("io.freefair.lombok") version "8.4"
 }
 
-group = "org.example"
-version = "0.0.1-SNAPSHOT"
+allprojects {
+    group = "com.example"
+    version = "0.0.1-SNAPSHOT"
 
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(21)
+    repositories {
+        mavenCentral()
+    }
+
+}
+
+subprojects {
+    apply {
+        plugin("java")
+        plugin("io.freefair.lombok")
+        plugin("org.springframework.boot")
+        plugin("io.spring.dependency-management")
+    }
+    dependencies {
+        implementation("org.jetbrains:annotations:26.0.0")
+    }
+    java {
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
     }
 }
 
-repositories {
-    mavenCentral()
+tasks.bootJar {
+    enabled = false
 }
 
-dependencies {
-    implementation("org.jetbrains:annotations:26.0.2")
-
-    implementation("org.springframework.boot:spring-boot-starter")
-
-    implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-
-    runtimeOnly("org.postgresql:postgresql")
-
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-    testImplementation("com.h2database:h2")
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
+tasks.jar {
+    enabled = false
 }
