@@ -4,7 +4,7 @@ public record ProductSummary(
         Long id,
         String title,
         String image,
-        String price,
+        int price,
         String mallName,
         String brand,
         String category1,

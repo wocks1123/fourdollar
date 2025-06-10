@@ -24,7 +24,7 @@ public class CouponJpaEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "description", nullable = false)
     private String description;
 
     @Column(name = "start_date", nullable = false)
@@ -57,8 +57,8 @@ public class CouponJpaEntity {
         entity.id = coupon.getId();
         entity.name = coupon.getName();
         entity.description = coupon.getDescription();
-        entity.startDate = coupon.getStartDate();
-        entity.endDate = coupon.getEndDate();
+        entity.startDate = coupon.getPeriod().startDate();
+        entity.endDate = coupon.getPeriod().endDate();
         entity.status = coupon.getStatus();
         entity.target = coupon.getTarget();
         entity.issuanceType = coupon.getIssuanceType();

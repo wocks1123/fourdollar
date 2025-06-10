@@ -1,6 +1,5 @@
-package com.example.fourdollardomain.category.infra.jpa.repository;
+package com.example.fourdollardomain.category.infra.jpa;
 
-import com.example.fourdollardomain.category.infra.jpa.entity.CategoryJpaEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

@@ -8,7 +8,7 @@ public class Product {
     private final Long id;
     private final String title;
     private final String image;
-    private final String price;
+    private final int price;
     private final String mallName;
     private final String brand;
     private final String maker;
@@ -18,7 +18,7 @@ public class Product {
     private final String category4;
 
 
-    public Product(Long id, String title, String image, String price, String mallName, String brand, String maker, String category1, String category2, String category3, String category4) {
+    public Product(Long id, String title, String image, int price, String mallName, String brand, String maker, String category1, String category2, String category3, String category4) {
         this.id = id;
         this.title = title;
         this.image = image;

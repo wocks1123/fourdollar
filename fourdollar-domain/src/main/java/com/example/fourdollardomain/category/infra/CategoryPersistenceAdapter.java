@@ -4,8 +4,8 @@ import com.example.fourdollardomain.category.application.port.out.LoadCategoryLi
 import com.example.fourdollardomain.category.application.port.out.LoadCategoryPort;
 import com.example.fourdollardomain.category.application.port.out.SaveCategoryPort;
 import com.example.fourdollardomain.category.domain.Category;
-import com.example.fourdollardomain.category.infra.jpa.entity.CategoryJpaEntity;
-import com.example.fourdollardomain.category.infra.jpa.repository.CategoryJpaRepository;
+import com.example.fourdollardomain.category.infra.jpa.CategoryJpaEntity;
+import com.example.fourdollardomain.category.infra.jpa.CategoryJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
@@ -35,7 +35,7 @@ public class CategoryPersistenceAdapter implements LoadCategoryPort, SaveCategor
     @Override
     public List<Category> findAllRootCategories() {
         return categoryJpaRepository.findAllRootCategories().stream()
-                .map(this::mapToDomain)
+                .map(CategoryJpaEntity::toDomain)
                 .toList();
     }
 }

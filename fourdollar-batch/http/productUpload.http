@@ -1,0 +1,8 @@
+###
+POST localhost:8082/api/v1/jobs/launch/productUploadJob
+Content-Type: application/json
+
+{
+  "inputFilePath": "data/product500.csv",
+  "chunkSize": 50
+}

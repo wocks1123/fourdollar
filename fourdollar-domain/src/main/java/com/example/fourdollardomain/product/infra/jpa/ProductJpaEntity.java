@@ -23,7 +23,7 @@ public class ProductJpaEntity {
     private String image;
 
     @Column(name = "price")
-    private String price;
+    private int price;
 
     @Column(name = "mall_name")
     private String mallName;
@@ -63,6 +63,22 @@ public class ProductJpaEntity {
         entity.category2 = product.getCategory2();
         entity.category3 = product.getCategory3();
         entity.category4 = product.getCategory4();
+        return entity;
+    }
+
+    public static ProductJpaEntity of(Long id, String title, String image, int price, String mallName, String brand, String maker, String category1, String category2, String category3, String category4) {
+        ProductJpaEntity entity = new ProductJpaEntity();
+        entity.id = id;
+        entity.title = title;
+        entity.image = image;
+        entity.price = price;
+        entity.mallName = mallName;
+        entity.brand = brand;
+        entity.maker = maker;
+        entity.category1 = category1;
+        entity.category2 = category2;
+        entity.category3 = category3;
+        entity.category4 = category4;
         return entity;
     }
 

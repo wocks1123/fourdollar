@@ -4,18 +4,17 @@ CREATE SEQUENCE product_id_seq START 1 INCREMENT 50;
 
 CREATE TABLE product
 (
-    id                BIGINT PRIMARY KEY       DEFAULT nextval('product_id_seq'),
-    name              VARCHAR(200)   NOT NULL,
-    slug              VARCHAR(200)   NOT NULL UNIQUE,
-    short_description VARCHAR(500),
-    full_description  TEXT,
-    seller_id         INTEGER,
-    brand_id          INTEGER,
-    status            VARCHAR(20)    NOT NULL  DEFAULT 'Waiting' CHECK (status IN ('Waiting', 'OnSale', 'OutOfStock', 'Deleted')),
-    base_price        DECIMAL(15, 2) NOT NULL,
-    currency          VARCHAR(3)     NOT NULL,
-    created_at        TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    updated_at        TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    id         BIGINT PRIMARY KEY       DEFAULT nextval('product_id_seq'),
+    title      VARCHAR(500) NOT NULL,
+    image      VARCHAR(1000),
+    price      INTEGER,
+    mall_name  VARCHAR(100),
+    brand      VARCHAR(100),
+    maker      VARCHAR(100),
+    category1  VARCHAR(100),
+    category2  VARCHAR(100),
+    category3  VARCHAR(100),
+    category4  VARCHAR(100)
 );
 
 CREATE INDEX idx_product_seller ON product (seller_id);
@@ -78,7 +77,7 @@ CREATE TABLE product_option
 );
 
 
--- 태그
+/*-- 태그
 
 CREATE SEQUENCE tag_id_seq START 1 INCREMENT 50;
 
@@ -100,3 +99,4 @@ CREATE TABLE product_tag
     tag_id     BIGINT NOT NULL,
     UNIQUE (product_id, tag_id)
 );
+*/

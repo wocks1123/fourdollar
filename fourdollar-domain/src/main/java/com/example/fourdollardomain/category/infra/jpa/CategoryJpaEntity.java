@@ -1,4 +1,4 @@
-package com.example.fourdollardomain.category.infra.jpa.entity;
+package com.example.fourdollardomain.category.infra.jpa;
 
 import com.example.fourdollardomain.category.domain.Category;
 import jakarta.persistence.*;
