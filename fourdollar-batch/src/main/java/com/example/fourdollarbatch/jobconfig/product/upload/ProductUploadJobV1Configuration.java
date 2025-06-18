@@ -1,6 +1,6 @@
 package com.example.fourdollarbatch.jobconfig.product.upload;
 
-import com.example.fourdollardomain.product.infra.jpa.ProductJpaEntity;
+import com.example.fourdollardomain.product.domain.Product;
 import jakarta.persistence.EntityManagerFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.batch.core.Job;
@@ -47,10 +47,10 @@ public class ProductUploadJobV1Configuration extends DefaultBatchConfiguration {
                                   PlatformTransactionManager transactionManager,
                                   ProductUploadJobParameter jobParameter,
                                   ItemReader<ProductCsvDto> productCsvReader,
-                                  ItemProcessor<ProductCsvDto, ProductJpaEntity> productProcessor,
-                                  ItemWriter<ProductJpaEntity> productWriter) {
+                                  ItemProcessor<ProductCsvDto, Product> productProcessor,
+                                  ItemWriter<Product> productWriter) {
         return new StepBuilder("productUploadStep", jobRepository)
-                .<ProductCsvDto, ProductJpaEntity>chunk(jobParameter.getChunkSize(), transactionManager)
+                .<ProductCsvDto, Product>chunk(jobParameter.getChunkSize(), transactionManager)
                 .reader(productCsvReader)
                 .processor(productProcessor)
                 .writer(productWriter)
@@ -72,30 +72,29 @@ public class ProductUploadJobV1Configuration extends DefaultBatchConfiguration {
 
     @Bean
     @StepScope
-    public ItemProcessor<ProductCsvDto, ProductJpaEntity> productProcessor() {
+    public ItemProcessor<ProductCsvDto, Product> productProcessor() {
         return item -> {
             log.debug("Processing product: {}", item.title());
 
-            return ProductJpaEntity.of(
-                    null,
-                    item.title(),
-                    item.image(),
-                    item.lprice(),
-                    item.mallName(),
-                    item.brand(),
-                    item.maker(),
-                    item.category1(),
-                    item.category2(),
-                    item.category3(),
-                    item.category4()
-            );
+            return Product.builder()
+                    .title(item.title())
+                    .image(item.image())
+                    .price(item.lprice())
+                    .mallName(item.mallName())
+                    .brand(item.brand())
+                    .maker(item.maker())
+                    .category1(item.category1())
+                    .category2(item.category2())
+                    .category3(item.category3())
+                    .category4(item.category4())
+                    .build();
         };
     }
 
     @Bean
     @StepScope
-    public JpaItemWriter<ProductJpaEntity> productWriter(EntityManagerFactory entityManagerFactory) {
-        return new JpaItemWriterBuilder<ProductJpaEntity>()
+    public JpaItemWriter<Product> productWriter(EntityManagerFactory entityManagerFactory) {
+        return new JpaItemWriterBuilder<Product>()
                 .entityManagerFactory(entityManagerFactory)
                 .usePersist(true)
                 .build();

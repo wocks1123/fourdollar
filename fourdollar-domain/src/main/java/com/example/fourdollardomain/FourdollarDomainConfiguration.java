@@ -10,10 +10,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @ComponentScan
 @EnableAutoConfiguration
 @EnableJpaRepositories(basePackages = {
-        "com.example.fourdollardomain.*.infra.jpa",
+        "com.example.fourdollardomain.*.infra.persistence"
 })
 @EntityScan(basePackages = {
-        "com.example.fourdollardomain.*.infra.jpa",
+        "com.example.fourdollardomain.*.domain"
 })
 public class FourdollarDomainConfiguration {
 }

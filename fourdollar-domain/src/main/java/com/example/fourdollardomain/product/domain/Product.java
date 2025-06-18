@@ -1,23 +1,52 @@
 package com.example.fourdollardomain.product.domain;
 
+import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Entity
+@Table(name = "product")
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class Product {
 
-    private final Long id;
-    private final String title;
-    private final String image;
-    private final int price;
-    private final String mallName;
-    private final String brand;
-    private final String maker;
-    private final String category1;
-    private final String category2;
-    private final String category3;
-    private final String category4;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
+    @Column(name = "title")
+    private String title;
 
+    @Column(name = "image")
+    private String image;
+
+    @Column(name = "price")
+    private int price;
+
+    @Column(name = "mall_name")
+    private String mallName;
+
+    @Column(name = "brand")
+    private String brand;
+
+    @Column(name = "maker")
+    private String maker;
+
+    @Column(name = "category1")
+    private String category1;
+
+    @Column(name = "category2")
+    private String category2;
+
+    @Column(name = "category3")
+    private String category3;
+
+    @Column(name = "category4")
+    private String category4;
+
+    @Builder
     public Product(Long id, String title, String image, int price, String mallName, String brand, String maker, String category1, String category2, String category3, String category4) {
         this.id = id;
         this.title = title;
@@ -31,5 +60,6 @@ public class Product {
         this.category3 = category3;
         this.category4 = category4;
     }
+
 
 }
