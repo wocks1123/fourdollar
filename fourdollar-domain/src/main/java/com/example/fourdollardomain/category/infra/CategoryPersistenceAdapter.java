@@ -25,6 +25,11 @@ public class CategoryPersistenceAdapter implements LoadCategoryPort, SaveCategor
     }
 
     @Override
+    public long countByIdIn(@NotNull List<Long> ids) {
+        return categoryJpaRepository.countByIdIn(ids);
+    }
+
+    @Override
     public @NotNull Category save(@NotNull Category category) {
         return categoryJpaRepository.save(category);
     }

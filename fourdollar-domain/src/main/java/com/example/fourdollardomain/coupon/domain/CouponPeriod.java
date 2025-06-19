@@ -31,8 +31,12 @@ public class CouponPeriod {
         this.endDate = endDate;
     }
 
-    public boolean isExpired(ZonedDateTime baseDate) {
+    public boolean isExpiredAt(ZonedDateTime baseDate) {
         return endDate.isBefore(baseDate) || endDate.isEqual(baseDate);
+    }
+
+    public boolean isExpiredNow() {
+        return isExpiredAt(ZonedDateTime.now());
     }
 
 }

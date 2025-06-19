@@ -95,8 +95,7 @@ public class Coupon {
         if (this.issuanceType == IssuanceType.Limited && this.issueCount >= this.totalLimit) {
             return false;
         }
-        ZonedDateTime now = ZonedDateTime.now();
-        return this.period.isExpired(now);
+        return this.period.isExpiredNow();
     }
 
     public void issue() {

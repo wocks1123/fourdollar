@@ -1,65 +1,109 @@
 package com.example.fourdollardomain.product.domain;
 
+import com.example.fourdollardomain.common.entity.BaseEntity;
+import com.example.fourdollardomain.common.exception.FdAssert;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+import java.time.ZonedDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "product")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
-public class Product {
+public class Product extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_id_seq")
+    @SequenceGenerator(name = "product_id_seq", sequenceName = "product_id_seq")
     private Long id;
 
-    @Column(name = "title")
-    private String title;
+    @Column(name = "product_code", nullable = false, length = 20, unique = true)
+    private String productCode;
 
-    @Column(name = "image")
-    private String image;
+    @Column(name = "name", nullable = false, length = 200)
+    private String name;
 
-    @Column(name = "price")
-    private int price;
+    @Column(name = "slug", nullable = false, length = 200, unique = true)
+    private String slug;
 
-    @Column(name = "mall_name")
-    private String mallName;
+    @Column(name = "short_description", length = 500)
+    private String shortDescription;
 
-    @Column(name = "brand")
-    private String brand;
+    @Column(name = "full_description", columnDefinition = "TEXT")
+    private String fullDescription;
 
-    @Column(name = "maker")
-    private String maker;
+    @Column(name = "base_price", nullable = false, precision = 15, scale = 2)
+    private BigDecimal basePrice;
 
-    @Column(name = "category1")
-    private String category1;
+    @Column(name = "sale_start_date")
+    private ZonedDateTime saleStartDate;
 
-    @Column(name = "category2")
-    private String category2;
+    @Column(name = "sale_end_date")
+    private ZonedDateTime saleEndDate;
 
-    @Column(name = "category3")
-    private String category3;
+    @Column(name = "status", nullable = false, length = 16)
+    @Enumerated(EnumType.STRING)
+    private ProductStatus status;
 
-    @Column(name = "category4")
-    private String category4;
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<ProductOptionGroup> optionGroups = new ArrayList<>();
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
+    private final List<ProductCategory> categories = new ArrayList<>();
 
     @Builder
-    public Product(Long id, String title, String image, int price, String mallName, String brand, String maker, String category1, String category2, String category3, String category4) {
-        this.id = id;
-        this.title = title;
-        this.image = image;
-        this.price = price;
-        this.mallName = mallName;
-        this.brand = brand;
-        this.maker = maker;
-        this.category1 = category1;
-        this.category2 = category2;
-        this.category3 = category3;
-        this.category4 = category4;
+    public Product(String productCode,
+                   String name,
+                   String slug,
+                   String shortDescription,
+                   String fullDescription,
+                   BigDecimal basePrice,
+                   ZonedDateTime saleStartDate,
+                   ZonedDateTime saleEndDate,
+                   List<ProductOptionGroup> optionGroups,
+                   List<ProductCategory> categories) {
+        FdAssert.hasText(productCode, "Product code must not be empty");
+        FdAssert.hasText(name, "Product name must not be empty");
+        FdAssert.hasText(slug, "Product slug must not be empty");
+        FdAssert.notNull(basePrice, "Base price must not be null");
+        FdAssert.isTrue(basePrice.compareTo(BigDecimal.ZERO) >= 0, "Base price must be non-negative");
+        FdAssert.isTrue(saleStartDate == null || saleEndDate == null || saleStartDate.isBefore(saleEndDate),
+                "Sale start date must be before sale end date");
+        FdAssert.notEmpty(optionGroups, "Option groups must not be empty");
+        FdAssert.notEmpty(categories, "Categories must not be empty");
+
+        this.productCode = productCode;
+        this.name = name;
+        this.slug = slug;
+        this.shortDescription = shortDescription;
+        this.fullDescription = fullDescription;
+        this.basePrice = basePrice;
+        this.saleStartDate = saleStartDate;
+        this.saleEndDate = saleEndDate;
+        this.status = ProductStatus.Waiting;
+        this.addOptionGroups(optionGroups);
+        this.addCategories(categories);
     }
 
+    public void addOptionGroups(List<ProductOptionGroup> optionGroups) {
+        for (ProductOptionGroup optionGroup : optionGroups) {
+            optionGroup.setProduct(this);
+            this.optionGroups.add(optionGroup);
+        }
+    }
+
+    public void addCategories(List<ProductCategory> categories) {
+        for (ProductCategory category : categories) {
+            category.setProduct(this);
+            this.categories.add(category);
+        }
+    }
 
 }

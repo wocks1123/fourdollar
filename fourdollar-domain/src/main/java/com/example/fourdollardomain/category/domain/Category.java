@@ -1,5 +1,6 @@
 package com.example.fourdollardomain.category.domain;
 
+import com.example.fourdollardomain.common.exception.FdAssert;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -46,25 +47,28 @@ public class Category {
         this.name = name;
         this.description = description;
         this.displayOrder = displayOrder;
+        this.level = 1;
     }
 
     public void addSubCategory(Category subCategory) {
+        FdAssert.notNull(subCategory, "Sub-category must not be null");
+        FdAssert.isTrue(!this.subCategories.contains(subCategory), "Sub-category already exists in this category");
+        FdAssert.isTrue(this.level < 3, "Cannot add sub-category beyond level 3");
+
         subCategory.setParent(this);
+        subCategory.level = this.level + 1;
         this.subCategories.add(subCategory);
     }
 
-    public void modify(String name, String description, int level) {
+    public void modify(String name, String description, int displayOrder) {
         this.name = name;
         this.description = description;
-        this.level = level;
+        this.level = displayOrder;
     }
 
     private void setParent(Category parent) {
         this.parent = parent;
-        if (parent != null && !parent.getSubCategories().contains(this)) {
-            parent.getSubCategories().add(this);
-        }
-        this.parentId = parent != null ? parent.getId() : null;
+        this.parentId = parent.id;
     }
 
 }

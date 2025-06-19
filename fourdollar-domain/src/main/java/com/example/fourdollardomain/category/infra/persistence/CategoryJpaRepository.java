@@ -11,4 +11,6 @@ public interface CategoryJpaRepository extends JpaRepository<Category, Long> {
     @Query("SELECT c FROM Category c WHERE c.level = 1 ORDER BY c.displayOrder ASC")
     List<Category> findAllRootCategories();
 
+    @Query("SELECT COUNT(c) FROM Category c WHERE c.id IN :ids")
+    long countByIdIn(List<Long> ids);
 }
