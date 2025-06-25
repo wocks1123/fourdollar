@@ -66,6 +66,10 @@ public class Category {
         this.level = displayOrder;
     }
 
+    public boolean isRoot() {
+        return this.level == 1;
+    }
+
     private void setParent(Category parent) {
         this.parent = parent;
         this.parentId = parent.id;

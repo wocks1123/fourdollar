@@ -20,6 +20,7 @@ public abstract class BaseEntity {
     @PrePersist
     public void prePersist() {
         this.createdAt = ZonedDateTime.now();
+        this.updatedAt = ZonedDateTime.now();
     }
 
     @PreUpdate

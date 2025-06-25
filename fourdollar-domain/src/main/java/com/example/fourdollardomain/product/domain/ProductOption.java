@@ -19,11 +19,8 @@ public class ProductOption {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "option_group_id", nullable = false)
-    private Long optionGroupId;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "option_group_id", insertable = false, updatable = false)
+    @JoinColumn(name = "option_group_id")
     private ProductOptionGroup optionGroup;
 
     @Column(name = "name", nullable = false, length = 100)

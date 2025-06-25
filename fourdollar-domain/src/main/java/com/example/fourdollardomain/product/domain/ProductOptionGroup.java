@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "product_option")
+@Table(name = "product_option_group")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 public class ProductOptionGroup {
@@ -30,7 +30,7 @@ public class ProductOptionGroup {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "description", length = 500)
+    @Column(name = "display_order", nullable = false)
     private int displayOrder;
 
     @OneToMany(mappedBy = "optionGroup", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -57,6 +57,7 @@ public class ProductOptionGroup {
     void setProduct(Product product) {
         FdAssert.notNull(product, "Product must not be null");
         this.product = product;
+        this.productId = product.getId();
     }
 
 }

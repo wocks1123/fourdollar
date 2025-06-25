@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public record RegisterProductOptionCommand(
         String name,
         String sku,
-        BigDecimal additionalPrice,
-        int displayOrder
+        int displayOrder,
+        BigDecimal additionalPrice
 ) {
 }

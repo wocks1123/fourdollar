@@ -36,7 +36,6 @@ public class ProductCategory {
     @Builder
     ProductCategory(Long categoryId) {
         FdAssert.notNull(categoryId, "Category ID must not be null");
-
         this.categoryId = categoryId;
     }
 

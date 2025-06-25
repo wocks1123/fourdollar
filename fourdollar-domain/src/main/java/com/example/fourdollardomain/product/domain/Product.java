@@ -53,10 +53,10 @@ public class Product extends BaseEntity {
     private ProductStatus status;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<ProductOptionGroup> optionGroups = new ArrayList<>();
+    private List<ProductOptionGroup> optionGroups = new ArrayList<>();
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private final List<ProductCategory> categories = new ArrayList<>();
+    private List<ProductCategory> categories = new ArrayList<>();
 
     @Builder
     public Product(String productCode,
@@ -66,9 +66,7 @@ public class Product extends BaseEntity {
                    String fullDescription,
                    BigDecimal basePrice,
                    ZonedDateTime saleStartDate,
-                   ZonedDateTime saleEndDate,
-                   List<ProductOptionGroup> optionGroups,
-                   List<ProductCategory> categories) {
+                   ZonedDateTime saleEndDate) {
         FdAssert.hasText(productCode, "Product code must not be empty");
         FdAssert.hasText(name, "Product name must not be empty");
         FdAssert.hasText(slug, "Product slug must not be empty");
@@ -76,8 +74,6 @@ public class Product extends BaseEntity {
         FdAssert.isTrue(basePrice.compareTo(BigDecimal.ZERO) >= 0, "Base price must be non-negative");
         FdAssert.isTrue(saleStartDate == null || saleEndDate == null || saleStartDate.isBefore(saleEndDate),
                 "Sale start date must be before sale end date");
-        FdAssert.notEmpty(optionGroups, "Option groups must not be empty");
-        FdAssert.notEmpty(categories, "Categories must not be empty");
 
         this.productCode = productCode;
         this.name = name;
@@ -88,11 +84,10 @@ public class Product extends BaseEntity {
         this.saleStartDate = saleStartDate;
         this.saleEndDate = saleEndDate;
         this.status = ProductStatus.Waiting;
-        this.addOptionGroups(optionGroups);
-        this.addCategories(categories);
     }
 
     public void addOptionGroups(List<ProductOptionGroup> optionGroups) {
+        FdAssert.notEmpty(optionGroups, "Option groups must not be empty");
         for (ProductOptionGroup optionGroup : optionGroups) {
             optionGroup.setProduct(this);
             this.optionGroups.add(optionGroup);
@@ -100,6 +95,7 @@ public class Product extends BaseEntity {
     }
 
     public void addCategories(List<ProductCategory> categories) {
+        FdAssert.notEmpty(categories, "Categories must not be empty");
         for (ProductCategory category : categories) {
             category.setProduct(this);
             this.categories.add(category);

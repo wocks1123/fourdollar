@@ -1,7 +1,7 @@
 package com.example.fourdollardomain.product.infra;
 
 import com.example.fourdollardomain.product.application.port.in.dto.ProductSearchResult;
-import com.example.fourdollardomain.product.application.port.out.LoadProductsPort;
+import com.example.fourdollardomain.product.application.port.out.FindProductsPort;
 import com.example.fourdollardomain.product.application.port.out.SaveProductPort;
 import com.example.fourdollardomain.product.domain.Product;
 import com.example.fourdollardomain.product.infra.persistence.ProductJpaRepository;
@@ -10,9 +10,11 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 @RequiredArgsConstructor
-public class ProductRepositoryAdapter implements LoadProductsPort, SaveProductPort {
+public class ProductRepositoryAdapter implements FindProductsPort, SaveProductPort {
 
     private final ProductJpaRepository productJpaRepository;
 
@@ -39,6 +41,11 @@ public class ProductRepositoryAdapter implements LoadProductsPort, SaveProductPo
                 founds.hasNext(),
                 founds.hasPrevious()
         );
+    }
+
+    @Override
+    public Optional<Product> findById(@NotNull Long productId) {
+        return productJpaRepository.findById(productId);
     }
 
     @Override
