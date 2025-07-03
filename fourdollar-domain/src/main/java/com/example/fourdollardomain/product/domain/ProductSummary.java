@@ -4,7 +4,7 @@ public record ProductSummary(
         Long id,
         String title,
         String image,
-        String price,
+        int price,
         String mallName,
         String brand,
         String category1,
@@ -12,20 +12,4 @@ public record ProductSummary(
         String category3,
         String category4
 ) {
-
-    public static ProductSummary from(Product product) {
-        return new ProductSummary(
-                product.getId(),
-                product.getTitle(),
-                product.getImage(),
-                product.getPrice(),
-                product.getMallName(),
-                product.getBrand(),
-                product.getCategory1(),
-                product.getCategory2(),
-                product.getCategory3(),
-                product.getCategory4()
-        );
-    }
-
 }

@@ -21,11 +21,11 @@ public class RegisterCategoryService implements RegisterCategoryUseCase {
 
     @Override
     public @NotNull Long registerCategory(@NotNull RegisterCategoryCommand command) {
-        Category newCategory = new Category(
-                command.name(),
-                command.description(),
-                command.displayOrder()
-        );
+        Category newCategory = Category.builder()
+                .name(command.name())
+                .description(command.description())
+                .displayOrder(command.displayOrder())
+                .build();
 
         if (command.parentId() != null) {
             Category parentCategory = loadCategoryPort.findBy(command.parentId())

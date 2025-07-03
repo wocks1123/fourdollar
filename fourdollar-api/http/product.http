@@ -1,0 +1,66 @@
+###
+POST {{BASE_URL}}/api/v1/products
+Content-Type: application/json
+
+{
+  "productCode": "TEST1234",
+  "name": "테스트 상품",
+  "slug": "test-product-1234",
+  "shortDescription": "테스트 상품의 짧은 설명입니다.",
+  "fullDescription": "테스트 상품의 긴 설명입니다. 이 상품은 테스트용으로 만들어졌습니다.",
+  "basePrice": 10000,
+  "salesStartDate": "2025-01-01T00:00:00Z",
+  "salesEndDate": "2025-12-31T23:59:59Z"
+}
+
+###
+POST {{BASE_URL}}/api/v1/products/3/option-groups
+Content-Type: application/json
+
+[
+  {
+    "name": "사이즈",
+    "displayOrder": 1,
+    "options": [
+      {
+        "name": "소",
+        "sku": "PRODUCT-03-SIZE-S",
+        "additionalPrice": 0
+      },
+      {
+        "name": "중",
+        "sku": "PRODUCT-03-SIZE-M",
+        "additionalPrice": 1000
+      },
+      {
+        "name": "대",
+        "sku": "PRODUCT-03-SIZE-L",
+        "additionalPrice": 2000
+      }
+    ]
+  },
+  {
+    "name": "색상",
+    "displayOrder": 2,
+    "options": [
+      {
+        "name": "빨강",
+        "sku": "PRODUCT-03-COLOR-RED",
+        "additionalPrice": 0
+      },
+      {
+        "name": "파랑",
+        "sku": "PRODUCT-03-COLOR-BLUE",
+        "additionalPrice": 500
+      },
+      {
+        "name": "초록",
+        "sku": "PRODUCT-03-COLOR-GREEN",
+        "additionalPrice": 1000
+      }
+    ]
+  }
+]
+
+###
+GET {{BASE_URL}}/api/v1/products/3

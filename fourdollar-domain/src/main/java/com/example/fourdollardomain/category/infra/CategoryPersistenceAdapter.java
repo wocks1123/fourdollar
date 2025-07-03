@@ -4,8 +4,7 @@ import com.example.fourdollardomain.category.application.port.out.LoadCategoryLi
 import com.example.fourdollardomain.category.application.port.out.LoadCategoryPort;
 import com.example.fourdollardomain.category.application.port.out.SaveCategoryPort;
 import com.example.fourdollardomain.category.domain.Category;
-import com.example.fourdollardomain.category.infra.jpa.entity.CategoryJpaEntity;
-import com.example.fourdollardomain.category.infra.jpa.repository.CategoryJpaRepository;
+import com.example.fourdollardomain.category.infra.persistence.CategoryJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Repository;
@@ -22,20 +21,22 @@ public class CategoryPersistenceAdapter implements LoadCategoryPort, SaveCategor
 
     @Override
     public Optional<Category> findBy(@NotNull Long id) {
-        return categoryJpaRepository.findById(id)
-                .map(CategoryJpaEntity::toDomain);
+        return categoryJpaRepository.findById(id);
+    }
+
+    @Override
+    public long countByIdIn(@NotNull List<Long> ids) {
+        return categoryJpaRepository.countByIdIn(ids);
     }
 
     @Override
     public @NotNull Category save(@NotNull Category category) {
-        return categoryJpaRepository.save(CategoryJpaEntity.from(category))
-                .toDomain();
+        return categoryJpaRepository.save(category);
     }
 
     @Override
     public List<Category> findAllRootCategories() {
-        return categoryJpaRepository.findAllRootCategories().stream()
-                .map(this::mapToDomain)
-                .toList();
+        return categoryJpaRepository.findAllRootCategories();
     }
+
 }

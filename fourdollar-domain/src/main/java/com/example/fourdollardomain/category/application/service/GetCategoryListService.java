@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -37,7 +36,7 @@ public class GetCategoryListService implements GetCategoryListUseCase {
                 category.getDisplayOrder(),
                 category.getSubCategories().stream()
                         .map(this::mapToCategoryListResponse)
-                        .collect(Collectors.toList())
+                        .toList()
         );
     }
 }
