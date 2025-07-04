@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,12 +41,6 @@ public class Product extends BaseEntity {
     @Column(name = "base_price", nullable = false, precision = 15, scale = 2)
     private BigDecimal basePrice;
 
-    @Column(name = "sale_start_date")
-    private ZonedDateTime saleStartDate;
-
-    @Column(name = "sale_end_date")
-    private ZonedDateTime saleEndDate;
-
     @Column(name = "status", nullable = false, length = 16)
     @Enumerated(EnumType.STRING)
     private ProductStatus status;
@@ -64,16 +57,12 @@ public class Product extends BaseEntity {
                    String slug,
                    String shortDescription,
                    String fullDescription,
-                   BigDecimal basePrice,
-                   ZonedDateTime saleStartDate,
-                   ZonedDateTime saleEndDate) {
+                   BigDecimal basePrice) {
         FdAssert.hasText(productCode, "Product code must not be empty");
         FdAssert.hasText(name, "Product name must not be empty");
         FdAssert.hasText(slug, "Product slug must not be empty");
         FdAssert.notNull(basePrice, "Base price must not be null");
         FdAssert.isTrue(basePrice.compareTo(BigDecimal.ZERO) >= 0, "Base price must be non-negative");
-        FdAssert.isTrue(saleStartDate == null || saleEndDate == null || saleStartDate.isBefore(saleEndDate),
-                "Sale start date must be before sale end date");
 
         this.productCode = productCode;
         this.name = name;
@@ -81,8 +70,6 @@ public class Product extends BaseEntity {
         this.shortDescription = shortDescription;
         this.fullDescription = fullDescription;
         this.basePrice = basePrice;
-        this.saleStartDate = saleStartDate;
-        this.saleEndDate = saleEndDate;
         this.status = ProductStatus.Waiting;
     }
 

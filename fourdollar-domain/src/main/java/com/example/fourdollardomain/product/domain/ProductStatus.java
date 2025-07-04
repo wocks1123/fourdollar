@@ -4,7 +4,6 @@ public enum ProductStatus {
     Waiting,
     OnSale,
     OutOfStock,
-    Deleted,
-    Suspended,
-    Draft
+    Discontinued,
+    Suspended
 }

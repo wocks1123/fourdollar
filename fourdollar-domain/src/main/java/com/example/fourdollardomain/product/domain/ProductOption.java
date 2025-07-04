@@ -32,6 +32,9 @@ public class ProductOption {
     @Column(name = "display_order", nullable = false)
     private int displayOrder;
 
+    @Column(name = "stock", nullable = false)
+    private int stock = 0;
+
     @Column(name = "additional_price", nullable = false)
     private BigDecimal additionalPrice;
 
