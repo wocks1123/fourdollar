@@ -53,6 +53,10 @@ public class ProductOption {
         this.additionalPrice = additionalPrice;
     }
 
+    boolean isReadyForSale() {
+        return stock > 0;
+    }
+
     void setOptionGroup(ProductOptionGroup optionGroup) {
         FdAssert.notNull(optionGroup, "Option group must not be null");
         this.optionGroup = optionGroup;

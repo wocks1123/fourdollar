@@ -47,6 +47,10 @@ public class ProductOptionGroup {
         this.addOptions(options);
     }
 
+    boolean isReadyForSale() {
+        return !options.isEmpty() && options.stream().allMatch(ProductOption::isReadyForSale);
+    }
+
     void addOptions(List<ProductOption> options) {
         for (ProductOption option : options) {
             option.setOptionGroup(this);

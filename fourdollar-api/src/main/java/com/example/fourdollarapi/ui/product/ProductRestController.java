@@ -33,9 +33,7 @@ class ProductRestController {
                         request.slug(),
                         request.shortDescription(),
                         request.fullDescription(),
-                        request.basePrice(),
-                        request.saleStartDate(),
-                        request.saleEndDate()
+                        request.basePrice()
                 )
         ));
     }
@@ -66,7 +64,7 @@ class ProductRestController {
     ProductDetail getProductDetail(@PathVariable Long productId) {
         return getProductDetailUseCase.getProductDetail(productId);
     }
-    
+
 
     @GetMapping
     List<String> getAllProducts() {

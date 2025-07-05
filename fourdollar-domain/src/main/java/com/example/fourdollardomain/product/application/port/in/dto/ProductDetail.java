@@ -16,8 +16,6 @@ public record ProductDetail(
         String shortDescription,
         String fullDescription,
         BigDecimal basePrice,
-        ZonedDateTime saleStartDate,
-        ZonedDateTime saleEndDate,
         ProductStatus status,
         ZonedDateTime createdAt,
         ZonedDateTime updatedAt,

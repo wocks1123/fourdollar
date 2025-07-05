@@ -2,6 +2,7 @@ package com.example.fourdollardomain.product.domain;
 
 import com.example.fourdollardomain.common.entity.BaseEntity;
 import com.example.fourdollardomain.common.exception.FdAssert;
+import com.example.fourdollardomain.common.exception.FdIllegalArgumentException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -87,6 +88,40 @@ public class Product extends BaseEntity {
             category.setProduct(this);
             this.categories.add(category);
         }
+    }
+
+    public boolean isReadyForSale() {
+        if (status != ProductStatus.Waiting) {
+            return false;
+        }
+        return optionGroups.stream().allMatch(ProductOptionGroup::isReadyForSale);
+    }
+
+    public void onSale() {
+        if (isReadyForSale()) {
+            throw new FdIllegalArgumentException("Product must be ready for sale before going on sale");
+        }
+        this.status = ProductStatus.OnSale;
+    }
+
+    public void suspend() {
+        if (status != ProductStatus.OnSale) {
+            throw new FdIllegalArgumentException("Product must be on sale to be suspended");
+        }
+        this.status = ProductStatus.Suspended;
+    }
+
+    public void discontinue() {
+        if (status != ProductStatus.OnSale && status != ProductStatus.Suspended) {
+            throw new FdIllegalArgumentException("Product must be on sale to be suspended");
+        }
+        this.status = ProductStatus.Discontinued;
+    }
+
+    public List<ProductOption> getOptions() {
+        return optionGroups.stream()
+                .flatMap(optionGroup -> optionGroup.getOptions().stream())
+                .toList();
     }
 
 }

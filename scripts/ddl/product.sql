@@ -11,8 +11,6 @@ CREATE TABLE product
     short_description VARCHAR(500),
     full_description  TEXT,
     base_price        DECIMAL(15, 2)           NOT NULL,
-    sale_start_date   TIMESTAMP WITH TIME ZONE NOT NULL,
-    sale_end_date     TIMESTAMP WITH TIME ZONE NOT NULL,
     status            VARCHAR(20)              NOT NULL,
     created_at        TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at        TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -57,6 +55,7 @@ CREATE TABLE product_option
     option_group_id  BIGINT         NOT NULL,
     name             VARCHAR(100)   NOT NULL,
     sku              VARCHAR(50)    NOT NULL,
+    display_order    INTEGER        NOT NULL,
     additional_price DECIMAL(15, 2) NOT NULL DEFAULT 0,
-    display_order    INTEGER        NOT NULL
+    stock            INTEGER        NOT NULL
 );

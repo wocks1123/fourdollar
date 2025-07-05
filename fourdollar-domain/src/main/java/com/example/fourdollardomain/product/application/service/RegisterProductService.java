@@ -26,8 +26,6 @@ class RegisterProductService implements RegisterProductUseCase {
                 .shortDescription(command.shortDescription())
                 .fullDescription(command.fullDescription())
                 .basePrice(command.basePrice())
-                .saleStartDate(command.saleStartDate())
-                .saleEndDate(command.saleEndDate())
                 .build();
 
         return saveProductPort.saveProduct(product).getId();

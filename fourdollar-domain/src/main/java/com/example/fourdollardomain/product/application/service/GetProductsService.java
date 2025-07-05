@@ -38,8 +38,6 @@ class GetProductsService implements GetProductListUseCase, GetProductDetailUseCa
                 .shortDescription(product.getShortDescription())
                 .fullDescription(product.getFullDescription())
                 .basePrice(product.getBasePrice())
-                .saleStartDate(product.getSaleStartDate())
-                .saleEndDate(product.getSaleEndDate())
                 .status(product.getStatus())
                 .createdAt(product.getCreatedAt())
                 .updatedAt(product.getUpdatedAt())
